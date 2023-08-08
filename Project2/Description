@@ -1,0 +1,43 @@
+Matrix Multiplication using Map-Reduce
+Description
+The purpose of this project is to develop a Map-Reduce program on Hadoop to multiply two sparse matrices.
+
+Project Description
+For this project, you are asked to implement matrix multiplication in Map-Reduce. This is described in the last slide in bigdata-l03.pdf and in Section 2.3.9 (page 38) in Map-Reduce and the New Software Stack. Do not use the method in Section 2.3.10. Here is the pseudo code to multiply two matrices M and N. The first Map-Reduce job finds all possible products Mik*Nkj, for all k, by joining M and N:
+
+// mapper for matrix M
+map(key,line) =
+  split line into 3 values: i,k,m
+  emit(k,new Triple(0,i,m))
+
+// mapper for matrix N
+map(key,line) =
+  split line into 3 values: k,j,n
+  emit(k,new Triple(1,j,n))
+
+reduce(k,values) =
+  M_values = all triples (0,i,m) from values
+  N_values = all triples (1,j,n) from values
+  for (0,i,m) in M_values
+     for (1,j,n) in N_values
+        emit(new Pair(i,j),m*n)
+The second Map-Reduce adds all products for each pair (i,j):
+
+map(pair,value) =
+  emit(pair,value)
+
+reduce(pair,values) =
+  sum = 0.0
+  for v in values
+    sum += v
+  emit(pair,sum)
+You should use two Map-Reduce jobs in the same Java file project2/src/main/java/Multiply.java. 
+You should modify Multiply.java only. In your Java main program, args[0] is the first input matrix M, args[1] is the second input matrix N, args[2] is the directory name to pass the intermediate results from the first Map-Reduce job to the second, and args[3] is the output directory. 
+The file formats for the input and output must be text and the file format of the intermediate results must be sequence file format (binary). 
+There are two small sparse matrices 4*3 and 3*3 in the files M-matrix-small.txt and N-matrix-small.txt for testing in local mode. 
+Their matrix multiplication must return the 4*3 matrix in solution-small.txt. Then, there are two moderate-sized matrices 1000*500 and 500*1000 in the files M-matrix-large.txt and M-matrix-large.txt for testing in distributed mode. 
+The first and last lines of the matrix multiplication of these two matrices must must be similar to those in solution-large.txt.
+
+
+
+
