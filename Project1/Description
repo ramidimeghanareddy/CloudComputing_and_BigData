@@ -1,0 +1,25 @@
+A Simple Map-Reduce Program: 
+The purpose of this project is to develop a simple Map-Reduce program on Hadoop that analyzes data from Twitter.
+
+Project Description
+In this project, you are asked to implement a simple graph algorithm that needs two Map-Reduce jobs. You will use real data from Twitter from 2010. 
+The dataset represents the follower graph that contains links between tweeting users in the form: user_id, follower_id (where user_id is the id of a user and follower_id is the id of the follower). 
+For example:
+
+12,13
+12,14
+12,15
+16,17
+Here, users 13, 14 and 15 are followers of user 12, while user 17 is a follower of user 16. The complete dataset is available on Expanse (file /expanse/lustre/projects/uot187/fegaras/large-twitter.csv) and contains 736,930 users and 36,743,448 links. 
+A subset of this file (which contains the last 10,000 lines of the complete dataset) is available in small-twitter.csv inside project1.
+
+First, for each twitter user, you count the number of users she follows. Then, you group the users by their number of the users they follow and for each group you count how many users belong to this group. That is, the result will have lines such as:
+
+10 30
+which says that there are 30 users who follow 10 users. To help you, I am giving you the pseudo code. The first Map-Reduce is:
+
+You should write the two Map-Reduce job in the Java file src/main/java/Twitter.java. 
+An empty src/main/java/Twitter.java has been provided, as well as scripts to build and run this code on Expanse. 
+You should modify the Twitter.java only. In your Java main program, args[0] is the twitter file, args[1] is the intermediate directory (output of job1 and input of job2), and args[2] is the output directory. 
+All the input and output file formats must be text formats. Do not use binary formats. See slide 13 in bigdata-l03.pdf to see how to chain two jobs together. 
+It will be easier to do this project if you finish the first map-reduce first and check the results in the temporary directory temp and then finish the second map-reduce.
