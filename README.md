@@ -1,5 +1,5 @@
 # Cloud Computing and Big Data
-Project1
+Project1: A Simple Map-Reduce Program
 
 Project2
 
